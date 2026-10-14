@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accounting Quiz Library</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#667085; --line:#e6eaf0; --accent:#3157d5; --bg:#f5f7fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+    header { padding:48px 20px 36px; text-align:center; color:white; background:linear-gradient(135deg,#172554,#3157d5); }
+    header h1 { margin:0 0 10px; font-size:clamp(1.8rem,5vw,2.7rem); }
+    header p { margin:0 auto; max-width:650px; line-height:1.6; color:#e1e8ff; }
+    main { width:min(1000px,calc(100% - 32px)); margin:28px auto 48px; }
+    .toolbar { display:flex; gap:12px; margin-bottom:18px; }
+    input { width:100%; padding:13px 15px; border:1px solid var(--line); border-radius:12px; font:inherit; background:white; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    .card { background:white; border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 5px 18px #18254a0a; display:flex; flex-direction:column; gap:12px; }
+    .tag { display:inline-flex; align-self:flex-start; padding:5px 9px; border-radius:999px; background:#edf2ff; color:#2847ae; font-size:.78rem; font-weight:700; }
+    .card h2 { font-size:1.15rem; margin:0; }
+    .card p { color:var(--muted); line-height:1.5; margin:0; flex:1; }
+    .btn { display:inline-block; text-align:center; text-decoration:none; padding:11px 14px; border-radius:11px; background:var(--accent); color:white; font-weight:700; }
+    .btn:hover { filter:brightness(.94); }
+    .note { margin-top:22px; color:var(--muted); font-size:.9rem; line-height:1.6; }
+    .empty { display:none; padding:24px; text-align:center; color:var(--muted); }
+    footer { text-align:center; padding:20px; color:var(--muted); font-size:.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 Accounting Quiz Library</h1>
+    <p>Choose a chapter to practise. Each quiz opens as its own page, keeping its original questions, answer explanations and interactive features.</p>
+  </header>
+  <main>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search chapters…" aria-label="Search chapters">
+    </div>
+    <section class="grid" id="chapters">
+      <article class="card" data-search="chapter 4 investor appraisal case study">
+        <span class="tag">CHAPTER 4</span>
+        <h2>Investor Appraisal</h2>
+        <p>Case-study quiz with visual data. Open the original Chapter 4 HTML file.</p>
+        <a class="btn" href="chapter4_case_study_quiz_visual_data.html">Start quiz →</a>
+      </article>
+      <article class="card" data-search="chapter 5 multiple choice mcq">
+        <span class="tag">CHAPTER 5</span>
+        <h2>Chapter 5 Quiz</h2>
+        <p>50 multiple-choice questions with the original interactive quiz interface.</p>
+        <a class="btn" href="chapter_5_50_mcqs_quiz_animated.html">Start quiz →</a>
+      </article>
+      <article class="card" data-search="chapter 6 technical appraisal hrm human resource management">
+        <span class="tag">CHAPTER 6</span>
+        <h2>Technical Appraisal &amp; HRM Appraisal</h2>
+        <p>70 questions, with answer feedback, explanations and quiz controls.</p>
+        <a class="btn" href="Chapter6_Technical_HRM_Appraisal_Quiz.html">Start quiz →</a>
+      </article>
+    </section>
+    <div class="empty" id="empty">No matching chapter found.</div>
+    <p class="note"><strong>Adding a chapter:</strong> upload its HTML file into the same GitHub repository, then add a new chapter card in this page with a link to that exact filename.</p>
+  </main>
+  <footer>Accounting Quiz Library · Hosted with GitHub Pages</footer>
+  <script>
+    const search = document.getElementById('search');
+    const cards = [...document.querySelectorAll('.card')];
+    const empty = document.getElementById('empty');
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      let shown = 0;
+      cards.forEach(card => {
+        const visible = (card.innerText + ' ' + card.dataset.search).toLowerCase().includes(q);
+        card.style.display = visible ? 'flex' : 'none';
+        if (visible) shown++;
+      });
+      empty.style.display = shown ? 'none' : 'block';
+    });
+  </script>
+</body>
+</html>
