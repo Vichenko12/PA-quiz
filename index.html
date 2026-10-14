@@ -26,75 +26,7 @@
     footer { text-align:center; padding:20px; color:var(--muted); font-size:.85rem; }
   </style>
 </head>
-  ```html
-<section id="auto-chapters-section">
-  <h2>📚 All Quiz Chapters</h2>
-  <p>Choose a quiz to start practising.</p>
-  <div id="auto-chapters">Loading chapters...</div>
-</section>
 
-<script>
-async function loadQuizChapters() {
-  const container = document.getElementById("auto-chapters");
-
-  try {
-    const response = await fetch(
-      "https://api.github.com/repos/Vichenko12/PA-quiz/contents/?ref=main"
-    );
-
-    if (!response.ok) {
-      throw new Error("Could not load repository files.");
-    }
-
-    const files = await response.json();
-
-    const chapters = files.filter(file =>
-      file.type === "file" &&
-      file.name.toLowerCase().endsWith(".html") &&
-      file.name.toLowerCase() !== "index.html"
-    );
-
-    container.replaceChildren();
-
-    if (chapters.length === 0) {
-      container.textContent = "No quiz chapters found.";
-      return;
-    }
-
-    chapters.sort((a, b) =>
-      a.name.localeCompare(b.name, undefined, {
-        numeric: true,
-        sensitivity: "base"
-      })
-    );
-
-    chapters.forEach(file => {
-      const link = document.createElement("a");
-
-      link.href = "./" + encodeURIComponent(file.name);
-      link.textContent = file.name
-        .replace(/\.html$/i, "")
-        .replace(/[_-]+/g, " ");
-
-      link.style.display = "block";
-      link.style.padding = "12px";
-      link.style.margin = "8px 0";
-      link.style.border = "1px solid #ddd";
-      link.style.borderRadius = "10px";
-      link.style.textDecoration = "none";
-
-      container.appendChild(link);
-    });
-  } catch (error) {
-    container.textContent =
-      "Could not load chapters. Please refresh and try again.";
-    console.error(error);
-  }
-}
-
-loadQuizChapters();
-</script>
-```
 <body>
   <header>
     <h1>📚 Project Appraisal</h1>
